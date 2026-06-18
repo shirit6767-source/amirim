@@ -1,0 +1,1771 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>האתר של ליאב - עיתוני הסרטים המצוירים</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=UnifrakturMaguntia&family=Abril+Fatface&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a0a00;
+    --paper: #f5ead0;
+    --aged: #e8d5a3;
+    --accent: #8b1a1a;
+    --gold: #c9a227;
+    --shadow: rgba(26,10,0,0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #2c1a0e;
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.1) 2px,
+      rgba(0,0,0,0.1) 4px
+    );
+    font-family: 'Crimson Text', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ===== HEADER ===== */
+  .site-header {
+    text-align: center;
+    padding: 30px 20px 15px;
+    position: relative;
+  }
+  .site-title {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: clamp(3rem, 8vw, 7rem);
+    color: var(--gold);
+    text-shadow: 3px 3px 0 #5a2d00, 6px 6px 10px rgba(0,0,0,0.8);
+    letter-spacing: 4px;
+    line-height: 1;
+    animation: titleGlow 3s ease-in-out infinite alternate;
+  }
+  @keyframes titleGlow {
+    from { text-shadow: 3px 3px 0 #5a2d00, 6px 6px 10px rgba(0,0,0,0.8), 0 0 20px rgba(201,162,39,0.3); }
+    to   { text-shadow: 3px 3px 0 #5a2d00, 6px 6px 10px rgba(0,0,0,0.8), 0 0 50px rgba(201,162,39,0.7); }
+  }
+  .site-subtitle {
+    color: var(--aged);
+    font-family: 'Crimson Text', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    letter-spacing: 6px;
+    margin-top: 8px;
+    opacity: 0.8;
+  }
+  .header-rule {
+    border: none;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 15px auto;
+    max-width: 700px;
+  }
+
+  /* ===== NEWSPAPERS GRID ===== */
+  #home-screen {
+    padding: 20px;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+  .newspapers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 30px;
+    padding: 10px;
+  }
+
+  /* ===== NEWSPAPER CARD ===== */
+  .newspaper-card {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 6px 6px 0 var(--ink), 10px 10px 20px rgba(0,0,0,0.5);
+    transition: transform 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+    animation: cardAppear 0.6s ease backwards;
+  }
+  .newspaper-card:nth-child(1) { animation-delay: 0.1s; }
+  .newspaper-card:nth-child(2) { animation-delay: 0.2s; }
+  .newspaper-card:nth-child(3) { animation-delay: 0.3s; }
+  .newspaper-card:nth-child(4) { animation-delay: 0.4s; }
+  .newspaper-card:nth-child(5) { animation-delay: 0.5s; }
+  @keyframes cardAppear {
+    from { opacity: 0; transform: translateY(30px) rotate(-2deg); }
+    to   { opacity: 1; transform: translateY(0) rotate(0deg); }
+  }
+  .newspaper-card:hover {
+    transform: translateY(-6px) rotate(1deg);
+    box-shadow: 10px 14px 0 var(--ink), 15px 20px 30px rgba(0,0,0,0.6);
+  }
+  .newspaper-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 22px,
+      rgba(26,10,0,0.06) 22px,
+      rgba(26,10,0,0.06) 23px
+    );
+    pointer-events: none;
+  }
+
+  .card-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 8px 12px;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+  .card-flag {
+    text-align: center;
+    padding: 15px 12px 8px;
+    border-bottom: 2px solid var(--ink);
+  }
+  .card-name {
+    font-family: 'Abril Fatface', serif;
+    font-size: 1.45rem;
+    color: var(--ink);
+    line-height: 1.15;
+    display: block;
+  }
+  .card-subtitle-line {
+    font-family: 'Crimson Text', serif;
+    font-style: italic;
+    font-size: 0.8rem;
+    color: #5a3a1a;
+    display: block;
+    margin-top: 3px;
+  }
+  .card-cover-art {
+    width: 100%;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5.5rem;
+    background: var(--aged);
+    position: relative;
+    overflow: hidden;
+  }
+  .card-cover-art::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 50%, rgba(26,10,0,0.15) 100%);
+  }
+  .card-teaser {
+    padding: 10px 14px 6px;
+    font-size: 0.82rem;
+    color: var(--ink);
+    line-height: 1.5;
+    font-style: italic;
+    border-bottom: 1px solid rgba(26,10,0,0.25);
+  }
+  .card-footer {
+    padding: 10px 14px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .price-badge {
+    background: var(--accent);
+    color: var(--paper);
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 5px 12px;
+    border: 2px solid var(--ink);
+    border-radius: 2px;
+    white-space: nowrap;
+    box-shadow: 2px 2px 0 var(--ink);
+  }
+  .read-btn {
+    background: var(--gold);
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 0.82rem;
+    padding: 6px 14px;
+    cursor: pointer;
+    border-radius: 2px;
+    box-shadow: 2px 2px 0 var(--ink);
+    transition: all 0.15s;
+    letter-spacing: 1px;
+  }
+  .read-btn:hover {
+    background: var(--ink);
+    color: var(--gold);
+    transform: translate(-1px,-1px);
+    box-shadow: 3px 3px 0 var(--gold);
+  }
+
+  /* ===== NEWSPAPER VIEWER ===== */
+  #viewer-screen {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(20,8,0,0.92);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  #viewer-screen.active {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .newspaper-viewer {
+    background: var(--paper);
+    width: min(760px, 100%);
+    max-height: 94vh;
+    overflow: hidden;
+    position: relative;
+    border: 3px solid var(--ink);
+    box-shadow: 0 0 60px rgba(0,0,0,0.8), 0 0 0 8px rgba(201,162,39,0.2);
+    display: flex;
+    flex-direction: column;
+  }
+  .viewer-top-bar {
+    background: var(--ink);
+    color: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 18px;
+    flex-shrink: 0;
+  }
+  .viewer-paper-name {
+    font-family: 'Abril Fatface', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+  }
+  .close-btn {
+    background: var(--accent);
+    color: var(--paper);
+    border: 2px solid var(--paper);
+    font-size: 1.3rem;
+    width: 36px; height: 36px;
+    cursor: pointer;
+    font-weight: 900;
+    border-radius: 2px;
+    transition: all 0.15s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .close-btn:hover { background: #c00; transform: scale(1.1); }
+
+  .newspaper-page {
+    padding: 30px 40px;
+    overflow-y: auto;
+    flex: 1;
+    background: var(--paper);
+    background-image: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 27px,
+      rgba(26,10,0,0.08) 27px,
+      rgba(26,10,0,0.08) 28px
+    );
+    position: relative;
+  }
+  .newspaper-page::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0; left: 38px;
+    width: 2px;
+    background: rgba(139,26,26,0.25);
+    pointer-events: none;
+  }
+  .page-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 900;
+    color: var(--ink);
+    line-height: 1.2;
+    border-bottom: 4px double var(--ink);
+    padding-bottom: 10px;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+  .page-dateline {
+    text-align: center;
+    font-family: 'Crimson Text', serif;
+    font-size: 0.8rem;
+    color: #7a4a1a;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(26,10,0,0.2);
+    padding-bottom: 8px;
+  }
+  .page-drop-cap::first-letter {
+    font-family: 'Abril Fatface', serif;
+    font-size: 4.5rem;
+    float: right;
+    line-height: 0.75;
+    margin-left: 8px;
+    margin-top: 8px;
+    color: var(--accent);
+  }
+  .page-body {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.1rem;
+    line-height: 1.85;
+    color: var(--ink);
+    text-align: justify;
+    columns: 2;
+    column-gap: 24px;
+    column-rule: 1px solid rgba(26,10,0,0.2);
+    direction: rtl;
+  }
+  .page-body p { margin-bottom: 12px; break-inside: avoid; }
+  .page-img {
+    text-align: center;
+    font-size: 4.5rem;
+    margin: 15px 0;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .page-img-caption {
+    font-style: italic;
+    font-size: 0.8rem;
+    text-align: center;
+    color: #5a3a1a;
+    margin-top: -10px;
+    break-inside: avoid;
+  }
+  .pull-quote {
+    border-top: 3px solid var(--ink);
+    border-bottom: 3px solid var(--ink);
+    padding: 10px 0;
+    margin: 15px 0;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    text-align: center;
+    color: var(--accent);
+    column-span: all;
+    break-inside: avoid;
+  }
+
+  .page-nav {
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 18px;
+    flex-shrink: 0;
+    gap: 10px;
+  }
+  .page-nav-btn {
+    background: var(--gold);
+    color: var(--ink);
+    border: 2px solid var(--paper);
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 7px 20px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.15s;
+    letter-spacing: 1px;
+  }
+  .page-nav-btn:hover { background: var(--paper); }
+  .page-nav-btn:disabled { opacity: 0.3; cursor: default; }
+  .page-counter {
+    color: var(--aged);
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    letter-spacing: 2px;
+  }
+  .page-dots {
+    display: flex; gap: 8px;
+  }
+  .page-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: rgba(245,234,208,0.3);
+    border: 1px solid var(--aged);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .page-dot.active { background: var(--gold); }
+
+  /* ===== FOOTER ===== */
+  .site-footer {
+    text-align: center;
+    padding: 20px;
+    color: rgba(245,234,208,0.45);
+    font-family: 'Crimson Text', serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+  }
+
+  /* ===== PRINT BUTTON IN VIEWER ===== */
+  .print-btn {
+    background: #2a6e2a;
+    color: var(--paper);
+    border: 2px solid var(--paper);
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 7px 16px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.15s;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .print-btn:hover { background: #1a4f1a; transform: scale(1.04); }
+  .print-btn .print-counter {
+    background: var(--gold);
+    color: var(--ink);
+    border-radius: 50%;
+    width: 20px; height: 20px;
+    font-size: 0.7rem;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900;
+  }
+  .print-btn.used {
+    background: #888;
+    cursor: default;
+  }
+  .print-btn.admin-mode {
+    background: #1a4fa0;
+  }
+
+  /* ===== PRINT POPUP ===== */
+  .print-popup {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%) scale(0.8);
+    background: var(--paper);
+    border: 3px solid var(--ink);
+    box-shadow: 8px 8px 0 var(--ink), 0 0 60px rgba(0,0,0,0.8);
+    padding: 36px 40px;
+    z-index: 999;
+    text-align: center;
+    min-width: 300px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s cubic-bezier(.34,1.56,.64,1);
+    font-family: 'Crimson Text', serif;
+  }
+  .print-popup.show {
+    opacity: 1;
+    pointer-events: all;
+    transform: translate(-50%,-50%) scale(1);
+  }
+  .print-popup h3 {
+    font-family: 'Abril Fatface', serif;
+    font-size: 1.6rem;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .print-popup p {
+    color: #5a3a1a;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  .print-popup .pp-close {
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    padding: 10px 28px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.15s;
+  }
+  .print-popup .pp-close:hover { background: var(--accent); }
+  .print-popup .pp-icon { font-size: 3.5rem; margin-bottom: 12px; }
+  .popup-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 998;
+    display: none;
+  }
+  .popup-overlay.show { display: block; }
+
+  /* ===== FLOATING BOT ===== */
+  #bot-bubble {
+    position: fixed;
+    bottom: 30px;
+    right: 24px;
+    z-index: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+  #bot-btn {
+    width: 62px; height: 62px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), #e8a020);
+    border: 3px solid var(--ink);
+    font-size: 2rem;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 var(--ink), 0 8px 24px rgba(0,0,0,0.5);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex; align-items: center; justify-content: center;
+    animation: botBounce 2.5s ease-in-out infinite;
+  }
+  @keyframes botBounce {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+  }
+  #bot-btn:hover {
+    transform: scale(1.12);
+    box-shadow: 6px 6px 0 var(--ink), 0 12px 30px rgba(0,0,0,0.6);
+    animation: none;
+  }
+  #bot-label {
+    background: var(--ink);
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-size: 0.72rem;
+    padding: 4px 10px;
+    border-radius: 10px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    border: 1px solid var(--gold);
+  }
+
+  /* ===== ADMIN / BOT CHAT PANEL ===== */
+  #admin-panel {
+    position: fixed;
+    bottom: 110px;
+    right: 20px;
+    width: 300px;
+    background: var(--paper);
+    border: 3px solid var(--ink);
+    border-radius: 4px;
+    box-shadow: 6px 6px 0 var(--ink), 0 20px 50px rgba(0,0,0,0.7);
+    z-index: 600;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    animation: slideUp 0.3s ease;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  #admin-panel.open { display: flex; }
+  .admin-panel-header {
+    background: var(--ink);
+    color: var(--gold);
+    padding: 12px 16px;
+    font-family: 'Abril Fatface', serif;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .admin-panel-header span { font-size: 1.4rem; margin-left: 8px; }
+  .admin-close-x {
+    background: none;
+    border: none;
+    color: var(--paper);
+    font-size: 1.2rem;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.15s;
+  }
+  .admin-close-x:hover { opacity: 1; }
+  .admin-chat-log {
+    padding: 14px 14px 6px;
+    max-height: 220px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-family: 'Crimson Text', serif;
+    font-size: 0.95rem;
+  }
+  .chat-msg {
+    padding: 8px 12px;
+    border-radius: 4px;
+    line-height: 1.45;
+    max-width: 90%;
+    animation: msgPop 0.2s ease;
+  }
+  @keyframes msgPop {
+    from { opacity:0; transform: scale(0.9); }
+    to   { opacity:1; transform: scale(1); }
+  }
+  .chat-msg.bot {
+    background: var(--aged);
+    border: 1px solid rgba(26,10,0,0.2);
+    align-self: flex-start;
+    border-radius: 2px 14px 14px 14px;
+    color: var(--ink);
+  }
+  .chat-msg.user {
+    background: var(--ink);
+    color: var(--paper);
+    align-self: flex-end;
+    border-radius: 14px 2px 14px 14px;
+  }
+  .admin-input-row {
+    display: flex;
+    gap: 0;
+    border-top: 2px solid var(--ink);
+    padding: 0;
+  }
+  .admin-input-row input {
+    flex: 1;
+    border: none;
+    background: var(--paper);
+    font-family: 'Crimson Text', serif;
+    font-size: 0.95rem;
+    padding: 10px 14px;
+    color: var(--ink);
+    outline: none;
+    direction: rtl;
+  }
+  .admin-input-row button {
+    background: var(--gold);
+    border: none;
+    border-right: 2px solid var(--ink);
+    font-size: 1.2rem;
+    width: 44px;
+    cursor: pointer;
+    transition: background 0.15s;
+    flex-shrink: 0;
+  }
+  .admin-input-row button:hover { background: var(--ink); color: var(--gold); }
+  .admin-status-bar {
+    background: #1a4f1a;
+    color: #90ee90;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.78rem;
+    text-align: center;
+    padding: 6px;
+    letter-spacing: 2px;
+    display: none;
+  }
+  .admin-status-bar.show { display: block; }
+
+  /* ===== PRINT STYLES ===== */
+  #print-area { display: none; }
+  @media print {
+    body > *:not(#print-area) { display: none !important; }
+    #print-area { display: block !important; }
+    .pr-sheet { display: flex; flex-direction: column; min-height: 100vh; padding: 10mm 12mm 6mm; font-family: 'Crimson Text', Georgia, serif; direction: rtl; color: #111; background: white; }
+    .pr-two-col { display: flex; flex-direction: row; gap: 0; flex: 1; }
+    .pr-one-col { display: flex; flex-direction: column; flex: 1; }
+    .pr-card { flex: 1; padding: 0 8px; overflow: hidden; }
+    .pr-card.left { padding-left: 0; }
+    .pr-card.right { padding-right: 0; }
+    .pr-divider { width: 1px; background: #aaa; margin: 0 4px; flex-shrink: 0; }
+    .pr-break { page-break-before: always; }
+    .pr-copy { text-align: center; font-size: 7pt; color: #aaa; border-top: 1px solid #ddd; padding-top: 5px; margin-top: 6px; letter-spacing: 1px; }
+    .pa-masthead { text-align: center; border-bottom: 3px double #111; padding-bottom: 5px; margin-bottom: 4px; }
+    .pa-sitename { font-size: 6.5pt; letter-spacing: 2px; color: #888; margin-bottom: 2px; }
+    .pa-papername { font-family: 'Playfair Display', Georgia, serif; font-size: 13pt; font-weight: 900; }
+    .pa-dateline { text-align: center; font-size: 6.5pt; color: #777; letter-spacing: 2px; margin: 4px 0 8px; }
+    .pa-headline { font-family: 'Playfair Display', Georgia, serif; font-size: 12pt; font-weight: 900; line-height: 1.2; text-align: center; border-bottom: 2px solid #111; padding-bottom: 6px; margin-bottom: 8px; }
+    .pa-body { font-size: 8pt; line-height: 1.65; text-align: justify; }
+    .pa-body p { margin-bottom: 6px; }
+    .pa-body blockquote { border-top: 1px solid #333; border-bottom: 1px solid #333; padding: 4px 0; margin: 8px 0; text-align: center; font-style: italic; font-size: 8.5pt; color: #5a1a1a; }
+    .pr-one-col .pa-papername { font-size: 20pt; }
+    .pr-one-col .pa-headline { font-size: 16pt; }
+    .pr-one-col .pa-body { font-size: 10.5pt; columns: 2; column-gap: 18px; column-rule: 1px solid #ccc; }
+    .pr-one-col .pa-body blockquote { column-span: all; }
+    @page { margin: 8mm; size: A4; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-title">האתר של ליאב</div>
+  <div class="site-subtitle">✦ עיתוני הסרטים המצוירים הנחשבים ביותר ✦</div>
+  <hr class="header-rule">
+</header>
+
+<section id="home-screen">
+  <div class="newspapers-grid" id="papers-grid"></div>
+</section>
+
+<!-- Viewer overlay -->
+<div id="viewer-screen">
+  <div class="newspaper-viewer">
+    <div class="viewer-top-bar">
+      <span class="viewer-paper-name" id="viewer-title"></span>
+      <button class="close-btn" onclick="closeViewer()">✕</button>
+    </div>
+    <div class="newspaper-page" id="viewer-page"></div>
+    <div class="page-nav">
+      <button class="page-nav-btn" id="btn-prev" onclick="changePage(-1)">◄ הקודם</button>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+        <div class="page-dots" id="page-dots"></div>
+        <div class="page-counter" id="page-counter">עמוד 1 מתוך 5</div>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <button class="print-btn" id="print-btn" onclick="handlePrint()">
+          🖨️ הדפס
+          <span class="print-counter" id="print-counter-badge">1</span>
+        </button>
+        <button class="page-nav-btn" id="btn-next" onclick="changePage(1)">הבא ►</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Print area (hidden, shown on print) -->
+<div id="print-area"></div>
+
+<!-- Print popup overlay -->
+<div class="popup-overlay" id="popup-overlay" onclick="closePopup()"></div>
+<div class="print-popup" id="print-popup">
+  <div class="pp-icon" id="pp-icon">🖨️</div>
+  <h3 id="pp-title">מדפיס...</h3>
+  <p id="pp-msg">ההדפסה שלך בדרך!</p>
+  <button class="pp-close" onclick="closePopup()">סגור</button>
+</div>
+
+<!-- Floating Bot -->
+<div id="bot-bubble">
+  <div id="bot-label">בוט עזרה 🤖</div>
+  <button id="bot-btn" onclick="toggleAdmin()" title="בוט עזרה">🤖</button>
+</div>
+
+<!-- Admin / Bot Chat Panel -->
+<div id="admin-panel">
+  <div class="admin-panel-header">
+    <div><span>🤖</span> בוט עזרה</div>
+    <button class="admin-close-x" onclick="toggleAdmin()">✕</button>
+  </div>
+  <div class="admin-status-bar" id="admin-status-bar">✅ מצב אדמין פעיל — הדפסות חינם!</div>
+  <!-- Model selector (admin only) -->
+  <div id="model-selector-bar" style="display:none; padding:6px 12px; background:rgba(201,162,39,0.15); border-bottom:1px solid rgba(201,162,39,0.3); font-size:0.8rem; color:var(--gold); direction:rtl;">
+    <label style="margin-left:6px;">🧠 מודל AI:</label>
+    <select id="ai-model-select" style="background:#2a1500; color:var(--gold); border:1px solid var(--gold); border-radius:3px; padding:2px 6px; font-size:0.78rem; cursor:pointer;" onchange="changeAIModel(this.value)">
+      <optgroup label="Claude">
+        <option value="claude-sonnet-4-20250514">Claude Sonnet 4.6</option>
+        <option value="claude-sonnet-4-5-20251001">Claude Sonnet 4.5</option>
+        <option value="claude-opus-4-5-20251001">Claude Opus 4.5</option>
+        <option value="claude-haiku-4-5-20251001">Claude Haiku 4.5</option>
+      </optgroup>
+      <optgroup label="GPT">
+        <option value="gpt-4o">GPT-4o</option>
+        <option value="gpt-4o-mini">GPT-4o Mini</option>
+        <option value="gpt-4-turbo">GPT-4 Turbo</option>
+        <option value="gpt-3.5-turbo">ChatGPT 3.5</option>
+      </optgroup>
+    </select>
+    <span id="model-active-label" style="margin-right:8px; opacity:0.7; font-size:0.72rem;"></span>
+  </div>
+  <div class="admin-chat-log" id="chat-log">
+    <div class="chat-msg bot">שלום! 👋 אני הבוט של האתר של ליאב.<br>אפשר לשאול אותי הכל!<br><br>💡 יש לך קוד מיוחד? הקלד אותו וקבל הטבה!</div>
+  </div>
+  <div class="admin-input-row">
+    <button onclick="sendChat()">➤</button>
+    <input type="text" id="chat-input" placeholder="כתוב הודעה או קוד..." onkeydown="if(event.key==='Enter') sendChat()" autocomplete="off" />
+  </div>
+</div>
+
+<footer class="site-footer">© האתר של ליאב · כל הזכויות שמורות · מחירים כוללים מע"מ</footer>
+
+<script>
+// ===== STATE =====
+let adminMode = false;        // true = unlimited free prints
+let freePrintsLeft = 1;       // 1 free print for guests
+let botOpen = false;
+
+// ===== BOT TOGGLE =====
+function toggleAdmin() {
+  botOpen = !botOpen;
+  document.getElementById('admin-panel').classList.toggle('open', botOpen);
+  if (botOpen) document.getElementById('chat-input').focus();
+}
+
+function addMsg(text, who) {
+  const log = document.getElementById('chat-log');
+  const div = document.createElement('div');
+  div.className = `chat-msg ${who}`;
+  div.innerHTML = text;
+  log.appendChild(div);
+  log.scrollTop = log.scrollHeight;
+}
+
+function sendChat() {
+  const inp = document.getElementById('chat-input');
+  const txt = inp.value.trim();
+  if (!txt) return;
+  addMsg(txt, 'user');
+  inp.value = '';
+  setTimeout(() => botReply(txt), 500);
+}
+
+// ===== QUESTIONS BANK (30 total, 6 per newspaper, linked to paper content) =====
+// Types: 'trivia' | 'riddle' | 'complete' | 'find_diff' | 'describe'
+// paperKey: 'alice' | 'lion' | 'cinderella' | 'nemo' | 'frozen'
+// hint_in_paper: text that appears in the newspaper article hinting at the answer
+
+const QUESTIONS = [
+  // ===== ALICE IN WONDERLAND (6) =====
+  {
+    type: 'trivia',
+    paperKey: 'alice',
+    q: 'מי מוביל את אליס לתוך החור שדרכו היא נופלת לארץ הפלאות?',
+    answer: 'ארנב לבן',
+    hint: 'הוא מחזיק שעון ואומר "מאוחר מאוד!"',
+    paperHint: '📰 רמז בעיתון: בעמוד 1 של עיתון אליס כתוב "נערה נופלת דרך חור ארנב..."'
+  },
+  {
+    type: 'complete',
+    paperKey: 'alice',
+    q: 'השלם: "גדלתי מהעוגייה ו______ מהבקבוק"',
+    answer: 'קטנתי',
+    hint: 'ההפך מגדול',
+    paperHint: '📰 רמז בעיתון: בעמוד 2 של אליס כתוב "עוגיה מוזרה הופכת אליס לענקית"'
+  },
+  {
+    type: 'describe',
+    paperKey: 'alice',
+    q: 'נחש: "יש לי קלפים ושליחים, אני שולטת בארץ הפלאות ורוצה לכרות ראשים — מי אני?"',
+    answer: 'מלכת הלבבות',
+    hint: 'היא צועקת "כרות את הראש!"',
+    paperHint: '📰 רמז בעיתון: בעמוד 4 כתוב "משפט המלכה: ראשים ייכרתו!"'
+  },
+  {
+    type: 'riddle',
+    paperKey: 'alice',
+    q: 'אני מחייך גם כשנעלם לגמרי — נשאר רק החיוך שלי באוויר. מה אני?',
+    answer: 'חתול צ\'שייר',
+    hint: 'חתול מפורסם בארץ הפלאות',
+    paperHint: '📰 רמז בעיתון: בעמוד 3 של אליס — הרוזנת ועמה חתול מסתורי'
+  },
+  {
+    type: 'find_diff',
+    paperKey: 'alice',
+    q: 'מה ההבדל בין "מסיבת תה" למסיבה רגילה לפי המשוגע הכובען?',
+    answer: 'תמיד זמן תה',
+    hint: 'בארץ הפלאות השעה תמיד קבועה...',
+    paperHint: '📰 רמז בעיתון: בעמוד 3 — הרוזנת מארחת, ומסביב שגעון ושולחנות מלאים'
+  },
+  {
+    type: 'trivia',
+    paperKey: 'alice',
+    q: 'מה גילתה אליס בסוף הסרט — האם ארץ הפלאות הייתה אמיתית?',
+    answer: 'חלום',
+    hint: 'היא התעוררה...',
+    paperHint: '📰 רמז בעיתון: בעמוד 5 כתוב "חלום או מציאות? אליס מתעוררת"'
+  },
+
+  // ===== THE LION KING (6) =====
+  {
+    type: 'trivia',
+    paperKey: 'lion',
+    q: 'מי הוא הנבל במלך האריות שהרג את אחיו ואשים את הבן?',
+    answer: 'סקר',
+    hint: 'הוא הדוד של סימבה עם רעמה שחורה',
+    paperHint: '📰 רמז בעיתון: בעמוד 5 כתוב "סקר ביצע את הפשע הנוראי ביותר: הרג את אחיו"'
+  },
+  {
+    type: 'complete',
+    paperKey: 'lion',
+    q: 'השלם את הסלוגן של טימון ופומבה: "האקונה ______"',
+    answer: 'מטאטא',
+    hint: 'פירושה "אין דאגות" בסווהילי',
+    paperHint: '📰 רמז בעיתון: בעמוד 3 כתוב "האקונה מטאטא — אין דאגות לכל ימי חייך!"'
+  },
+  {
+    type: 'describe',
+    paperKey: 'lion',
+    q: 'נחש: "אני אבא מלך שנהרגתי בעמק הבהמות — ורוחי שומרת על בני. מי אני?"',
+    answer: 'מופסה',
+    hint: 'אבא של סימבה',
+    paperHint: '📰 רמז בעיתון: בעמוד 2 כתוב "מופסה, מלך גדול ואוהב, מת בעמק בהמות הדוהרות"'
+  },
+  {
+    type: 'riddle',
+    paperKey: 'lion',
+    q: 'אני יצאתי מהגאיה הסובלת, מצאתי את הנסיך הנעלם, ועודדתי אותו לחזור. בלעדיי לא היה מלך. מי אני?',
+    answer: 'נאלה',
+    hint: 'חברת הילדות של סימבה',
+    paperHint: '📰 רמז בעיתון: בעמוד 4 כתוב "בלי נאלה — לא היה מלך האריות"'
+  },
+  {
+    type: 'find_diff',
+    paperKey: 'lion',
+    q: 'מה ההבדל בין סימבה בתחילת הסרט לבין סימבה בסוף?',
+    answer: 'מלך',
+    hint: 'מגור לגלות ל...',
+    paperHint: '📰 רמז בעיתון: בעמוד 1 כתוב "סימבה: מהחורבן לכתר — המסע האגדי"'
+  },
+  {
+    type: 'trivia',
+    paperKey: 'lion',
+    q: 'מה שם השיר הנפוח של סקר שבו הוא מסביר את תוכניתו הרשעית?',
+    answer: 'be prepared',
+    hint: 'שם השיר באנגלית, שתי מילים',
+    paperHint: '📰 רמז בעיתון: בעמוד 5 כתוב "שיר Be Prepared הפך לקלאסיקה"'
+  },
+
+  // ===== CINDERELLA (6) =====
+  {
+    type: 'trivia',
+    paperKey: 'cinderella',
+    q: 'מה הופכת פיית הגודמאדר לכרכרה?',
+    answer: 'דלעת',
+    hint: 'ירק כתום עגול',
+    paperHint: '📰 רמז בעיתון: בעמוד 3 כתוב "דלעת הפכה לכרכרה, עכברים לסוסים"'
+  },
+  {
+    type: 'complete',
+    paperKey: 'cinderella',
+    q: 'השלם את לחש הפיה: "ביבידי בובידי ______"',
+    answer: 'בו',
+    hint: 'מילה אחת קצרה',
+    paperHint: '📰 רמז בעיתון: בעמוד 3 כתוב "ביבידי בובידי בו!"'
+  },
+  {
+    type: 'describe',
+    paperKey: 'cinderella',
+    q: 'נחש: "אני עשויה זכוכית, אחת בלבד, ומתאימה לרגל אחת בעולם כולו. מה אני?"',
+    answer: 'נעל זכוכית',
+    hint: 'מה הנסיך מחפש?',
+    paperHint: '📰 רמז בעיתון: בעמוד 1 כתוב "נעל זכוכית נמצאה — הנסיך מחפש בעלים!"'
+  },
+  {
+    type: 'riddle',
+    paperKey: 'cinderella',
+    q: 'אני שלטתי בבית, שברתי שמלות, וקינאתי בנערה העובדת. מי אני?',
+    answer: 'אמא חורגת',
+    hint: 'הנבלת של סינדרלה',
+    paperHint: '📰 רמז בעיתון: בעמוד 2 כתוב "אמא החורגת שלטה בבית ביד רמה"'
+  },
+  {
+    type: 'find_diff',
+    paperKey: 'cinderella',
+    q: 'מה קורה לקסם של הפיה בחצות?',
+    answer: 'נעלם',
+    hint: 'הכרכרה חוזרת להיות...',
+    paperHint: '📰 רמז בעיתון: בעמוד 3 כתוב "הקסם פג בחצות"'
+  },
+  {
+    type: 'trivia',
+    paperKey: 'cinderella',
+    q: 'מי בסופו של דבר מציל את סינדרלה — ממה מסמל הסרט את ניצחון הטוב?',
+    answer: 'אמונה',
+    hint: 'לא כוח, לא כסף — אלא...',
+    paperHint: '📰 רמז בעיתון: בעמוד 5 כתוב "כוחה של האגדה הוא שגם מי שחי בחשכה — יכול למצוא אור"'
+  },
+
+  // ===== FINDING NEMO (6) =====
+  {
+    type: 'trivia',
+    paperKey: 'nemo',
+    q: 'מה הבעיה הפיזית של נמו שגורמת לאביו לדאוג כל כך?',
+    answer: 'סנפיר קטן',
+    hint: 'אחד הסנפירים שלו...',
+    paperHint: '📰 רמז בעיתון: בעמוד 1 כתוב "נמו, עם סנפיר קטן אחד, נלקח לאקווריום"'
+  },
+  {
+    type: 'complete',
+    paperKey: 'nemo',
+    q: 'השלם את המשפט של דורי: "פשוט ממשיכים ______"',
+    answer: 'לשחות',
+    hint: 'מה דגים עושים?',
+    paperHint: '📰 רמז בעיתון: בעמוד 2 כתוב על דורי — "היא חיה ברגע, ובכל פעם מחדש"'
+  },
+  {
+    type: 'describe',
+    paperKey: 'nemo',
+    q: 'נחש: "אנחנו שלושה כרישים שהחלטנו לא לאכול דגים — אבל טיפת דם אחת הרסה הכל. מי אנחנו?"',
+    answer: 'כרישי הצמחונות',
+    hint: 'ברוס, אנקל ודנטל',
+    paperHint: '📰 רמז בעיתון: בעמוד 4 כתוב "ברוס, אנקל ודנטל — שלושה כרישים שהחליטו להפסיק לאכול דגים"'
+  },
+  {
+    type: 'riddle',
+    paperKey: 'nemo',
+    q: 'אני שוכחת הכל אחרי כמה שניות — אבל בלעדיי מרלין לא היה מוצא את בנו. מי אני?',
+    answer: 'דורי',
+    hint: 'דגת כחולה עם בעיית זיכרון',
+    paperHint: '📰 רמז בעיתון: בעמוד 2 כתוב "דורי, דגת כחולה עם זיכרון קצר-טווח"'
+  },
+  {
+    type: 'find_diff',
+    paperKey: 'nemo',
+    q: 'מה ההבדל בין מרלין בתחילת הסרט לבין מרלין בסוף?',
+    answer: 'פחות מפחד',
+    hint: 'הוא למד להרפות ולסמוך...',
+    paperHint: '📰 רמז בעיתון: בעמוד 5 כתוב "מרלין היה אבא מגן יתר. לאחר שחצה אוקיינוס — הבין שהחיים אינם בבועת בטחון"'
+  },
+  {
+    type: 'trivia',
+    paperKey: 'nemo',
+    q: 'לאיזו עיר נחטף נמו ושם עמד האקווריום שאליו הגיע?',
+    answer: 'סידני',
+    hint: 'עיר גדולה באוסטרליה',
+    paperHint: '📰 רמז בעיתון: בעמוד 1 כתוב "נלקח לאקווריום בסידני"'
+  },
+
+  // ===== FROZEN (6) =====
+  {
+    type: 'trivia',
+    paperKey: 'frozen',
+    q: 'מה גורם ללב של אנה להפוך לקרח בסרט?',
+    answer: 'קסם של אלזה',
+    hint: 'אחותה פגעה בה בטעות',
+    paperHint: '📰 רמז בעיתון: בעמוד 3 כתוב "הלב הקפוא של אנה ניתן להמסה רק על ידי מעשה אהבה אמיתית"'
+  },
+  {
+    type: 'complete',
+    paperKey: 'frozen',
+    q: 'השלם את השיר: "Let it go, let it go, ______"',
+    answer: 'can t hold it back anymore',
+    hint: 'המשפט שמגיע אחרי "let it go" השני',
+    paperHint: '📰 רמז בעיתון: בעמוד 1 כתוב "Let It Go הפך להמנון שחרור"'
+  },
+  {
+    type: 'describe',
+    paperKey: 'frozen',
+    q: 'נחש: "אני חולם על הקיץ אבל הקיץ ימיס אותי — ובכל זאת אני שמח. מי אני?"',
+    answer: 'אולף',
+    hint: 'איש שלג מצחיק',
+    paperHint: '📰 רמז בעיתון: בעמוד 4 כתוב "אולף, איש השלג, חולם בתמימות על הקיץ — מבלי שמבין שהקיץ ימיס אותו"'
+  },
+  {
+    type: 'riddle',
+    paperKey: 'frozen',
+    q: 'נראיתי כנסיך טוב ורומנטי — אך הייתי נבל שתכנן הכל מראש. מי אני?',
+    answer: 'הנס',
+    hint: 'הנסיך שאנה רצתה להתחתן איתו',
+    paperHint: '📰 רמז בעיתון: בעמוד 2 כתוב "הנס היה נבל שתכנן הכל מראש"'
+  },
+  {
+    type: 'find_diff',
+    paperKey: 'frozen',
+    q: 'מה ההבדל בין אגדות נסיכות רגילות לבין פרוזן — מה מציל את הגיבורה?',
+    answer: 'אהבת אחות',
+    hint: 'לא נסיך — אלא...',
+    paperHint: '📰 רמז בעיתון: בעמוד 3 כתוב "לראשונה בסרטי הנסיכות, הגיבורה ניצלה על ידי אהבת אחים"'
+  },
+  {
+    type: 'trivia',
+    paperKey: 'frozen',
+    q: 'מה שם הצבי של קרסטוף שהוא מדבר בשמו ועונה לעצמו?',
+    answer: 'סבן',
+    hint: 'שם קצר, צבי נאמן',
+    paperHint: '📰 רמז בעיתון: בעמוד 5 כתוב "קרסטוף ו-סבן: ידידות אמת בין אדם לצבי"'
+  },
+];
+
+
+// ===== GAME ENGINE =====
+let gameState = null;
+let usedQuestions = [];
+const CODE = 'אמירים';
+let revealedLetters = [];
+let currentAIModel = 'claude-sonnet-4-20250514';
+let currentAIProvider = 'claude';
+
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+function changeAIModel(val) {
+  currentAIModel = val;
+  currentAIProvider = val.startsWith('claude') ? 'claude' : 'gpt';
+  const sel = document.getElementById('ai-model-select');
+  const label = document.getElementById('model-active-label');
+  if (label && sel) label.textContent = '✓ ' + sel.options[sel.selectedIndex].text;
+  addMsg('🔄 מודל AI שונה ל: <strong>' + (sel ? sel.options[sel.selectedIndex].text : val) + '</strong>', 'bot');
+}
+
+function getNextQuestion() {
+  // Pick a random question not yet used
+  const available = QUESTIONS.filter((_, i) => !usedQuestions.includes(i));
+  if (available.length === 0) { usedQuestions = []; return getNextQuestion(); }
+  const idx = QUESTIONS.indexOf(pick(available));
+  usedQuestions.push(idx);
+  return { ...QUESTIONS[idx], _idx: idx };
+}
+
+function startGame() {
+  const q = getNextQuestion();
+  const letterIdx = revealedLetters.length % CODE.length;
+  gameState = { ...q, letterIdx };
+
+  const revealedSoFar = CODE.split('').map((l, i) =>
+    i < revealedLetters.length ? `<span style="color:var(--gold);font-weight:900;">${l}</span>` : '_'
+  ).join(' ');
+
+  let typeLabel = '';
+  if (q.type === 'trivia')   typeLabel = '❓ <strong>שאלת טריוויה</strong>';
+  if (q.type === 'riddle')   typeLabel = '🧩 <strong>חידה</strong>';
+  if (q.type === 'complete') typeLabel = '✏️ <strong>השלם את המשפט</strong>';
+  if (q.type === 'find_diff')typeLabel = '🔍 <strong>מצא את ההבדל / ההסבר</strong>';
+  if (q.type === 'describe') typeLabel = '🎭 <strong>נחש לפי התיאור</strong>';
+
+  const paperName = { alice:'אליס', lion:'מלך האריות', cinderella:'סינדרלה', nemo:'נמו', frozen:'פרוזן' }[q.paperKey] || q.paperKey;
+
+  addMsg(
+    `${typeLabel} <span style="font-size:0.75em;opacity:0.6;">(מתוך עיתון: ${paperName})</span><br><br>`
+    + `<strong>${q.q}</strong><br><br>`
+    + `<em style="font-size:0.82em;opacity:0.7;">קוד עד כה: ${revealedSoFar}</em><br>`
+    + `<em style="font-size:0.78em;opacity:0.5;">כתוב "רמז" לעזרה | "ויתור" לדלג</em>`,
+    'bot'
+  );
+}
+
+function checkGameAnswer(txt) {
+  if (!gameState) return false;
+
+  const norm = s => s.toLowerCase()
+    .replace(/['",.!?\-־]/g,'')
+    .replace(/(זה|זאת|אני חושב|לדעתי|כנראה|אולי|הוא|היא|הם|של|את)/g,'')
+    .replace(/\s+/g,' ').trim();
+
+  const userNorm = norm(txt);
+
+  // רמז
+  if (/רמז|עזרה|עזור/.test(userNorm)) {
+    addMsg('💡 <strong>רמז:</strong> ' + gameState.hint + '<br><br><small style="opacity:0.6;">' + gameState.paperHint + '</small>', 'bot');
+    return true;
+  }
+
+  // ויתור
+  if (/ויתור|מוותר|אין לי מושג|skip|דלג/.test(userNorm)) {
+    addMsg('😅 התשובה הייתה: <strong>' + gameState.answer + '</strong><br><small>' + gameState.paperHint + '</small><br><br>כתוב "תן רמזים" להמשיך!', 'bot');
+    gameState = null;
+    return true;
+  }
+
+  // בדוק תשובה
+  const correctNorm = norm(gameState.answer);
+  const userWords = userNorm.split(' ').filter(w => w.length > 1);
+  const correctWords = correctNorm.split(' ').filter(w => w.length > 1);
+  const isMatch = correctWords.some(w => userNorm.includes(w)) ||
+                  userWords.some(w => correctNorm.includes(w));
+
+  if (isMatch) {
+    const letter = CODE[gameState.letterIdx];
+    revealedLetters.push(letter);
+
+    const progress = CODE.split('').map((l, i) => {
+      const needed = CODE.slice(0,i+1).split('').filter(x=>x===l).length;
+      const have = revealedLetters.filter(x=>x===l).length;
+      return have >= needed
+        ? '<span style="color:var(--gold);font-weight:900;font-size:1.2em;">' + l + '</span>'
+        : '_';
+    }).join(' ');
+
+    let msg = '🎉 <strong>נכון!</strong> כל הכבוד!<br><br>'
+      + 'קיבלת את האות: <strong style="font-size:1.8em;color:var(--gold);">' + letter + '</strong><br>'
+      + 'הקוד עד כה: <span style="letter-spacing:4px;">' + progress + '</span>';
+
+    if (revealedLetters.length >= CODE.length) {
+      msg += '<br><br>🏆 <strong style="color:var(--gold);">פיצחת את הקוד המלא!</strong><br>'
+        + 'הקוד הוא: <strong style="font-size:1.4em;color:var(--gold);letter-spacing:6px;">' + CODE + '</strong><br>'
+        + "כתוב אותו בצ'אט לקבל הדפסות חינם! 🖨️";
+      revealedLetters = [];
+      usedQuestions = [];
+    } else {
+      msg += '<br><br><em style="font-size:0.85em;opacity:0.7;">כתוב "תן רמזים" לשאלה הבאה!</em>';
+    }
+
+    addMsg(msg, 'bot');
+    gameState = null;
+    return true;
+  }
+
+  // בדוק אם קשור לסרט — בלי API, על בסיס מילות מפתח מהעיתון
+  const movieKeywords = {
+    alice: ['אליס','ארנב','פלאות','מלכה','לבבות','תה','כובען','חתול','שייר','ממלכה','קלפים'],
+    lion: ['סימבה','מופסה','סקר','נאלה','טימון','פומבה','גאיה','האקונה','מטאטא','אריה','ממלכה'],
+    cinderella: ['סינדרלה','נסיך','פיה','נעל','זכוכית','דלעת','אמא','חורגת','נשף','כרכרה'],
+    nemo: ['נמו','מרלין','דורי','כריש','ברוס','אקווריום','סידני','אוקיינוס','דג','שונית'],
+    frozen: ['אלזה','אנה','אולף','הנס','קרסטוף','סבן','קרח','שלג','ממלכה','פרוזן'],
+  };
+  const paperKw = movieKeywords[gameState.paperKey] || [];
+  const allKw = Object.values(movieKeywords).flat();
+  const isRelated = paperKw.some(kw => userNorm.includes(kw)) || allKw.some(kw => userNorm.includes(kw));
+
+  if (isRelated) {
+    addMsg('❌ קרוב! הכיוון שלך מהסרט 🎯 אבל לא מדויק.<br>נסה שוב או כתוב "רמז"', 'bot');
+  } else {
+    addMsg('🤷 זה לא נשמע קשור לסרט...<br>נסה לחשוב: <em>' + gameState.hint + '</em><br><small>כתוב "רמז" לעזרה או "ויתור" לדלג</small>', 'bot');
+  }
+  return true;
+}
+
+const RECOMMENDATIONS = {
+  'ים|דגים|אוקיינוס|שחייה|שונית': { paper: 'מוצאים את נמו 🐠', why: 'מרלין ודורי בהרפתקת ים מרגשת!' },
+  'קרח|שלג|חורף|מוזיקה|שיר|לט איט גו': { paper: 'פרוזן ❄️', why: 'אלזה, אנה, ואולף — קסם של אחיות ושלג!' },
+  'ממלכה|מלך|אריה|גאיה|ג\'ונגל': { paper: 'מלך האריות 🦁', why: 'סיפור על מלוכה, כבוד ואהבה!' },
+  'נסיכה|נשף|נעל|אהבה|חתונה|רומנטי': { paper: 'סינדרלה 👠', why: 'האגדה הנצחית מהמטבח לארמון!' },
+  'פנטזיה|חלום|מוזר|מסתורי|הרפתקה|דמיון': { paper: 'אליס בארץ הפלאות 🐇', why: 'עולם מטורף ומלא פלאות!' },
+};
+
+function getRecommendation(txt) {
+  for (const [pattern, rec] of Object.entries(RECOMMENDATIONS)) {
+    if (new RegExp(pattern).test(txt)) {
+      return `⭐ <strong>ממליץ לך על: ${rec.paper}</strong><br>${rec.why}`;
+    }
+  }
+  return null;
+}
+
+
+function botReply(raw) {
+  if (!raw || typeof raw !== 'string') return;
+  const txt = raw.toLowerCase().trim();
+
+  // smart intent normalizer
+  const intentTxt = raw.replace(/['",.!?]/g,'').trim();
+  const isAdmin    = /^אמירים$/.test(intentTxt);
+  const isSuperAdmin = /אמירים יוסף/.test(intentTxt);
+  const isGameTrigger = /רמזים|לשחק|משחק|quiz|תחרות|קוד סודי|פתח משחק|תתחיל משחק|בא נשחק|רוצה לשחק/.test(txt);
+  const isAdminIntent = /^אמירים/.test(intentTxt) && !isSuperAdmin;
+
+  if (isSuperAdmin) {
+    adminMode = true; updatePrintBtn();
+    const bar = document.getElementById('admin-status-bar');
+    bar.classList.add('show'); bar.textContent = '✅ מצב סופר-אדמין — כל הכוחות!';
+    document.getElementById('model-selector-bar').style.cssText = 'display:flex;align-items:center;';
+    addMsg('👑 <strong>סופר-אדמין!</strong> שלום אמירים יוסף!<br>✅ הדפסות חינם<br>🧠 בחירת מודל AI זמינה', 'bot');
+    return;
+  }
+  if (isAdmin) {
+    adminMode = true; updatePrintBtn();
+    document.getElementById('admin-status-bar').classList.add('show');
+    document.getElementById('model-selector-bar').style.cssText = 'display:flex;align-items:center;';
+    addMsg('🔑 <strong>קוד אדמין אושר!</strong><br>ברוך הבא, אמירים! הדפסות חינם ללא הגבלה! 🎉🖨️<br><br>🧠 עכשיו ניתן לשנות מודל AI למעלה!', 'bot');
+    return;
+  }
+
+  // GAME IN PROGRESS — always send to game first
+  if (gameState) { checkGameAnswer(txt, raw); return; }
+
+  // GAME TRIGGER — flexible detection
+  if (isGameTrigger) {
+    const log = document.getElementById('chat-log');
+    const typing = document.createElement('div');
+    typing.className = 'chat-msg bot'; typing.id = 'typing-ind';
+    typing.innerHTML = '<em>מקליד ✍️</em>';
+    log.appendChild(typing); log.scrollTop = log.scrollHeight;
+    setTimeout(() => {
+      document.getElementById('typing-ind')?.remove();
+      const remaining = CODE.length - revealedLetters.length;
+      addMsg(`🎮 <strong>מצב משחקים!</strong><br>יש 30 שאלות מ-5 עיתונים שונים 📰<br>כל ניצחון = אות מהקוד הסודי 🔑<br>נשארו לך <strong>${remaining}</strong> אותיות לגלות!<br><br>מתחיל...`, 'bot');
+      setTimeout(startGame, 900);
+    }, 600);
+    return;
+  }
+
+  // TYPING INDICATOR
+  const log = document.getElementById('chat-log');
+  const typing = document.createElement('div');
+  typing.className = 'chat-msg bot'; typing.id = 'typing-ind';
+  typing.innerHTML = '<em>מקליד ✍️</em>';
+  log.appendChild(typing); log.scrollTop = log.scrollHeight;
+  const delay = 500 + Math.random() * 400;
+
+  let reply = '';
+
+  if (/שלום|היי|הי|בוקר|ערב|מה שלום|מה נשמע/.test(txt))
+    reply = pick([
+      'שלום! 👋 ברוך הבא לאתר של ליאב! אפשר לשאול על העיתונים, לבקש המלצה, או לכתוב "תן רמזים" למשחק! 😄',
+      'היי! 🎉 אני הבוט — שאל אותי כל דבר, או כתוב "תמליץ לי" לפי מה שאתה אוהב!'
+    ]);
+
+
+
+  else if (/תמליץ|מה כדאי|מה לקרות|לא יודע מה/.test(txt))
+    reply = '🤔 ספר לי מה אתה אוהב! למשל: "אני אוהב ים", "אני אוהב שלג" — ואמליץ על העיתון המושלם! ⭐';
+
+  else if (/אני אוהב|אוהב|מעניין אותי/.test(txt)) {
+    const rec = getRecommendation(txt);
+    reply = rec || pick([
+      '⭐ ממליץ על <strong>אליס בארץ הפלאות</strong> — כי כל אחד צריך קצת פנטזיה! 🐇',
+      '⭐ נסה <strong>מלך האריות</strong> — קלאסיקה שלא מתיישנת! 🦁',
+      '⭐ <strong>פרוזן</strong> תמיד עובד — מוזיקה, אחיות, קסם! ❄️'
+    ]);
+  }
+
+  else if (/מחיר|עולה|כמה|שקל/.test(txt))
+    reply = '💰 מחירים: אליס ₪12 · מלך האריות ₪10 · סינדרלה ₪9 · נמו ₪11 · פרוזן ₪13';
+
+  else if (/הדפס|הדפסה|print/.test(txt))
+    reply = adminMode
+      ? '🖨️ אתה אדמין — הדפסות חינם ללא הגבלה!'
+      : `🖨️ יש לך ${freePrintsLeft} הדפסה חינם. פתח עיתון ולחץ הדפסה!`;
+
+  else if (/אליס|ארץ הפלאות|ארנב/.test(txt))
+    reply = '🐇 עיתון אליס — 5 עמודים עם הארנב הלבן, מלכת הלבבות, והחתול! ₪12.';
+  else if (/אריה|סימבה|מלך|מופסה|סקר|נאלה/.test(txt))
+    reply = '🦁 מלך האריות — האקונה מטאטא ועוד! ₪10.';
+  else if (/סינדרלה|נעל|נסיך|פיה|אמא חורגת/.test(txt))
+    reply = '👠 סינדרלה — מהמטבח לנשף! ₪9.';
+  else if (/נמו|דג|אוקיינוס|דורי|מרלין|כריש/.test(txt))
+    reply = '🐠 מוצאים את נמו — הרפתקת ים מרגשת! ₪11.';
+  else if (/פרוזן|אלזה|אנה|אולף|קרסטוף|סבן/.test(txt))
+    reply = '❄️ פרוזן — Let it go! אלזה, אנה, ואולף. ₪13.';
+
+  else if (/רשימה|מה יש|כמה עיתון/.test(txt))
+    reply = '📰 5 עיתונים: אליס 🐇 | מלך האריות 🦁 | סינדרלה 👠 | נמו 🐠 | פרוזן ❄️';
+
+  else if (/קוד|סיסמה|אדמין|חינם/.test(txt))
+    reply = '🔑 יש קוד סודי! כתוב <strong>"תן רמזים"</strong> ושחק 😄 — כל ניצחון מגלה אות!';
+
+  else if (/תודה|תנקיו|כיף|מצוין|מעולה|סבבה/.test(txt))
+    reply = pick(['בשמחה! 😊', 'תודה! 🙏 תהנה מהעיתונים!', 'ישר כוח! ⭐']);
+
+  else if (/עזרה|help|מה אתה|מי אתה/.test(txt))
+    reply = '🤖 אני הבוט! אפשר:<br>📰 שאלות על עיתונים<br>⭐ המלצות ("אני אוהב...")<br>🎮 משחקים ("תן רמזים")<br>💰 מחירים';
+
+  else if (adminMode && currentAIProvider !== 'builtin') {
+    setTimeout(() => { document.getElementById('typing-ind')?.remove(); callAI(raw); }, delay);
+    return;
+  }
+
+  else
+    reply = pick([
+      'מעניין! 🤔 נסה "תמליץ לי" או "תן רמזים" למשחק!',
+      'לא הצלחתי להבין 😅 — שאל על עיתון, בקש המלצה, או כתוב "תן רמזים"!'
+    ]);
+
+  setTimeout(() => { document.getElementById('typing-ind')?.remove(); addMsg(reply, 'bot'); }, delay);
+}
+
+async function callAI(userMsg) {
+  const system = `אתה בוט עזרה חמוד של "האתר של ליאב" — עיתוני סרטים מצוירים בעברית.
+העיתונים: אליס (₪12), מלך האריות (₪10), סינדרלה (₪9), נמו (₪11), פרוזן (₪13).
+ענה בעברית, קצר ועם אמוג'י.`;
+  try {
+    let reply = '';
+    if (currentAIProvider === 'claude') {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: currentAIModel, max_tokens: 300, system, messages: [{ role: 'user', content: userMsg }] })
+      });
+      const data = await res.json();
+      reply = data.content?.[0]?.text || 'שגיאה בתשובה';
+    } else {
+      reply = pick(['מעניין! שאל על העיתונים שלנו! 📰', 'שאלה טובה! כתוב "תמליץ לי" לרעיון! ⭐']);
+    }
+    addMsg(reply, 'bot');
+  } catch(e) {
+    addMsg('🤖 שגיאת רשת... נסה שוב!', 'bot');
+  }
+}
+
+
+// ===== PRINT LOGIC =====
+function updatePrintBtn() {
+  const btn = document.getElementById('print-btn');
+  const badge = document.getElementById('print-counter-badge');
+  if (!btn) return;
+  if (adminMode) {
+    btn.className = 'print-btn admin-mode';
+    badge.textContent = '∞';
+    btn.title = 'מצב אדמין — הדפסות חינם!';
+  } else if (freePrintsLeft > 0) {
+    btn.className = 'print-btn';
+    badge.textContent = freePrintsLeft;
+    btn.title = `נשאר ${freePrintsLeft} הדפסה חינם`;
+  } else {
+    btn.className = 'print-btn used';
+    badge.textContent = '0';
+    btn.title = 'השתמשת בהדפסה החינמית';
+  }
+}
+
+function handlePrint() {
+  if (!adminMode && freePrintsLeft <= 0) {
+    showPopup('😢', 'אין הדפסות חינם', 'השתמשת כבר בהדפסה החינמית שלך.<br>לקוד אדמין — שאל את הבוט! 🤖');
+    return;
+  }
+  if (!currentPaper) return;
+
+  const watermark = adminMode ? '🔑 הודפס במצב אדמין · אמירים' : '✦ הודפס מהאתר של ליאב ✦';
+  const copyright = '© האתר של ליאב 2026 · כל הזכויות שמורות';
+
+  function cleanPage(p) {
+    return p.body
+      .replace(/<div class="page-img">.*?<\/div>/gs, '')
+      .replace(/<div class="page-img-caption">.*?<\/div>/gs, '')
+      .replace(/<div class="pull-quote">(.*?)<\/div>/gs, '<blockquote>$1</blockquote>');
+  }
+
+  function pageCard(p, idx, extraClass) {
+    return '<div class="pr-card ' + extraClass + '">'
+      + '<div class="pa-masthead">'
+      + '<div class="pa-sitename">האתר של ליאב — עיתוני הסרטים המצוירים</div>'
+      + '<div class="pa-papername">' + currentPaper.name + '</div>'
+      + '</div>'
+      + '<div class="pa-dateline">' + p.dateline + ' · עמוד ' + (idx+1) + ' מתוך ' + currentPaper.pages.length + '</div>'
+      + '<h2 class="pa-headline">' + p.headline + '</h2>'
+      + '<div class="pa-body">' + cleanPage(p) + '</div>'
+      + '</div>';
+  }
+
+  const sheet1 = '<div class="pr-sheet">'
+    + '<div class="pr-two-col">'
+    + pageCard(currentPaper.pages[0], 0, 'left')
+    + '<div class="pr-divider"></div>'
+    + pageCard(currentPaper.pages[1], 1, 'right')
+    + '</div><div class="pr-copy">' + copyright + '</div></div>';
+
+  const sheet2 = '<div class="pr-sheet pr-break">'
+    + '<div class="pr-two-col">'
+    + pageCard(currentPaper.pages[2], 2, 'left')
+    + '<div class="pr-divider"></div>'
+    + pageCard(currentPaper.pages[3], 3, 'right')
+    + '</div><div class="pr-copy">' + copyright + '</div></div>';
+
+  const sheet3 = '<div class="pr-sheet pr-break">'
+    + '<div class="pr-one-col">'
+    + pageCard(currentPaper.pages[4], 4, '')
+    + '</div><div class="pr-copy">' + copyright + ' · ' + watermark + '</div></div>';
+
+  const printArea = document.getElementById('print-area');
+  printArea.innerHTML = sheet1 + sheet2 + sheet3;
+
+  if (!adminMode) { freePrintsLeft--; updatePrintBtn(); }
+
+  window.print();
+
+  setTimeout(() => { printArea.innerHTML = ''; }, 1500);
+}
+
+function showPopup(icon, title, msg) {
+  document.getElementById('pp-icon').textContent = icon;
+  document.getElementById('pp-title').textContent = title;
+  document.getElementById('pp-msg').innerHTML = msg;
+  document.getElementById('print-popup').classList.add('show');
+  document.getElementById('popup-overlay').classList.add('show');
+}
+function closePopup() {
+  document.getElementById('print-popup').classList.remove('show');
+  document.getElementById('popup-overlay').classList.remove('show');
+}
+
+const newspapers = [
+  {
+    id: "alice",
+    name: "אליס בארץ הפלאות",
+    subtitle: "חדשות מארץ הפלאות",
+    emoji: "🐇",
+    price: "₪12",
+    teaser: "מה קרה כשאליס נפלה לתוך החור? הדיווח המלא!",
+    pages: [
+      {
+        headline: "נערה נופלת דרך חור ארנב — ותיעלם לעולם מסתורי!",
+        dateline: "ארץ הפלאות · גיליון ראשון",
+        body: `
+          <div class="page-img">🐇</div>
+          <div class="page-img-caption">הארנב הלבן — רואה שעון ויוצר הכאוס</div>
+          <div class="pull-quote">"מאוחר! מאוחר מאוד!" — הארנב הלבן, שהחזיק שעון זהב בידיו</div>
+          <p>בשעה בלתי נודעת של אחר הצהריים, נעלמה אליס, בת 7, לאחר שרדפה אחרי ארנב לבן חמוד שהחזיק שעון. הארנב נכנס לחור בשדה, ואליס — בלי לחשוב פעמיים — קפצה בעקבותיו.</p>
+          <p>עדי ראייה מדווחים שאליס נפלה למעלה מחמש דקות בתוך חור ענקי, שקירותיו היו מעוטרים בספרים, מנורות ותמונות. "היא ירדה כל כך לאט," אמרה חברתה, "כאילו כוח המשיכה שבת!"</p>
+          <p>לאחר הנפילה, נמצאה אליס בחדר קטן עם דלת זעירה. על שולחן קטן מצאה בקבוק עם הכיתוב "שתי אותי" — ולפי דיווחים מפחידים, היא אכן שתתה אותו.</p>
+        `
+      },
+      {
+        headline: "עוגיה מוזרה הופכת אליס לענקית — ביתה נלכד בבניין!",
+        dateline: "ארץ הפלאות · גיליון שני",
+        body: `
+          <div class="page-img">🍰</div>
+          <div class="page-img-caption">העוגייה הקסומה — אכלי אותי</div>
+          <div class="pull-quote">בתוך שניות גדלה אליס עד לגג!</div>
+          <p>לאחר ששתתה מהבקבוק <strong>קטנתי</strong> — ואחרי שאכלה מהעוגייה <strong>גדלתי</strong>. ההפך הגמור. אליס למדה לשלוט בגודלה. לאחר שהצליחה להתכווץ ולעבור את הדלת הזעירה, מצאה אליס עוגייה שנשאה את הכיתוב "אכלי אותי". בלי לחשוב, נגסה בה — ופתאום גדלה בקצב מסחרר עד שראשה נגע בתקרה.</p>
+          <p>הבית הקטן שאחז אותה נשבר חלקית. אליס החלה לבכות ודמעותיה יצרו שיטפון קטן. "הרצפה הפכה לאגם," דיווח עכבר שנקלע למצב, "חיות רבות כמעט טבעו!"</p>
+          <p>מומחים לא מסכימים על מנגנון הקסם: האם מדובר בכימיה? בפיזיקה ארצית פלאות? חוקרים ממשיכים לחפש תשובות.</p>
+        `
+      },
+      {
+        headline: "ועידת חוקרי נגרות: הרוזנת ואת התינוק-חזיר",
+        dateline: "ארץ הפלאות · גיליון שלישי",
+        body: `
+          <div class="page-img">🐷</div>
+          <div class="page-img-caption">התינוק שהפך לחזיר בזרועות אליס</div>
+          <div class="pull-quote">"ילד או חזיר? כל ההבדל בפלפל!" — הרוזנת</div>
+          <p>בתוך ביתה של הרוזנת המוזרה, ריח פלפל חריף מילא את האוויר. אליס קיבלה לידיה תינוק בכי — ובדרכה החוצה גילתה שהוא הפך לחזיר קטן. "הוא נהם, לא בכה," אמרה בפליאה.</p>
+          <p>השפחה הרוחצת כלים, הרוזנת הצועקת, התינוק הבוכה — כל התמונה הזו הייתה כה כאוטית שאליס כמעט איבדה את שפיותה. החתול <strong>צ'שייר</strong> הופיע ונעלם כמה פעמים, כשרק <strong>חיוכו נשאר תלוי באוויר</strong> — גם כשגופו נעלם לחלוטין. תופעה מוזרה שלא ניתן להסביר.</p>
+        `
+      },
+      {
+        headline: "משפט המלכה: ראשים ייכרתו!",
+        dateline: "ארץ הפלאות · גיליון רביעי",
+        body: `
+          <div class="page-img">🃏</div>
+          <div class="page-img-caption">קלפי בית משפט המלכה — בצל הגיליוטינה</div>
+          <div class="pull-quote">"כרות את ראשה!" — <strong>מלכת הלבבות</strong>, הרודנת של ארץ הפלאות</div>
+          <p>בחצר ארמון המלכה האדומה, שחקנים בצורת קלפים ציירו ורדים אדומים על עציצים לבנים. המלכה גילתה את המעשה — וכמובן, פקדה לכרות ראשים. אליס ניסתה להגן עליהם.</p>
+          <p>לאחר מכן, משפט מופרך התקיים נגד נסיך הלבבות שגנב עוגיות. בדרכה למשפט, אליס עברה ליד מסיבת תה מטורפת של הכובען המשוגע — שבה <strong>השעון תמיד הראה את אותה שעה</strong>, כי הזמן קפא. "אצלנו <strong>תמיד זמן תה</strong>!" הכריז הכובען. אליס, שהגדילה בגודלה שוב, עמדה מול המלכה ואמרה בפנים: "אתם רק חבורה של קלפים!" הקלפים עפו לאוויר — והיא התעוררה.</p>
+        `
+      },
+      {
+        headline: "חלום או מציאות? אליס מתעוררת — ארץ הפלאות הייתה רק?",
+        dateline: "ארץ הפלאות · גיליון חמישי — מהדורה מיוחדת",
+        body: `
+          <div class="page-img">🌸</div>
+          <div class="page-img-caption">אליס מתעוררת — סוף שמח?</div>
+          <div class="pull-quote">חלום? קסם? פנטזיה? אף אחד לא יודע בוודאות.</div>
+          <p>אליס פרחה מן השינה על הדשא, ואחותה הגדולה ישבה לידה. ארץ הפלאות, המלכה, הארנב, חיוך החתול, צ'שייר — הכל נראה כחלום.</p>
+          <p>פסיכולוגים מתמודדים עם שאלה: האם ניסיון זה עיצב את אליס לעתיד? לפי דיווחים, היא סיפרה לאחותה את כל ההרפתקאות בפרטי פרטים — ודמיונה המדהים נשאר איתה כל חייה.</p>
+          <p>כל ההרפתקאה — הארנב הלבן, מלכת הלבבות, חתול צ'שייר — התבררה כ<strong>חלום</strong> עמוק ומפורט. ארץ הפלאות אולי לא קיימת על מפה — אך בלב כל ילד, היא פורחת לנצח.</p>
+        `
+      }
+    ]
+  },
+  {
+    id: "lion",
+    name: "מלך האריות",
+    subtitle: "כתב העת של מלך החיות",
+    emoji: "🦁",
+    price: "₪10",
+    teaser: "סימבה — מלך או נסיג? הסיפור המלא מהגאיה",
+    pages: [
+      {
+        headline: "סימבה: מהחורבן לכתר — המסע האגדי",
+        dateline: "ממלכת הגאיה · עמוד ראשון",
+        body: `<div class="page-img">🦁</div><div class="pull-quote">"זיכרה מי אתה" — רוח מופסה</div><p>כשסימבה, יורש כס הגאיה, נאלץ לברוח לאחר מותו של אביו, העולם השתנה לעד. מנחיל רשמי לגלות מוחלטת — מסע בן שנים התחיל.</p><p>אך הגורל לא ויתר. בין ג'ונגלים ירוקים ומלחמות פנימיות, סימבה חזר להתמודד עם הדוד הרשע סקר וכבש את הכס.</p>`
+      },
+      {
+        headline: "מופסה: אבא שמת — ואיך זה שבר את ליבות המיליונים",
+        dateline: "ממלכת הגאיה · עמוד שני",
+        body: `<div class="page-img">💔</div><div class="pull-quote">"אל תשכח אותי, בני"</div><p>הסצנה הנחשבת לקשה ביותר בהיסטוריית האנימציה: מופסה, מלך גדול ואוהב, מת בעמק בהמות הדוהרות. ילדים ברחבי העולם בכו בקולי קולות.</p><p>מחקרים מראים שסצנה זו הייתה חוויה מכוננת לדור שלם. הרגש האנושי שבה — אובדן הורה — חצה תרבויות ויבשות.</p>`
+      },
+      {
+        headline: "טימון ופומבה: הפילוסופים הסודיים של האנימציה",
+        dateline: "ממלכת הגאיה · עמוד שלישי",
+        body: `<div class="page-img">🐗</div><div class="pull-quote">"האקונה <strong>מטאטא</strong> — אין דאגות לכל ימי חייך!" — טימון ופומבה</div><p>טימון (סורינוקס) ופומבה (חזיר יבחיני) אינם רק קומיקסים — הם מגלמים פילוסופיה שלמה של חיים ללא דאגה. "האקונה מטאטה" הפך לסלוגן עולמי.</p><p>הם הצילו את סימבה מרעב, גידלו אותו ולימדו אותו לחיות — ובקרב האחרון, הסיחו את דעת היינות בריקוד מטורף.</p>`
+      },
+      {
+        headline: "נאלה: הגיבורה הנשכחת שהציל את הכל",
+        dateline: "ממלכת הגאיה · עמוד רביעי",
+        body: `<div class="page-img">🌿</div><div class="pull-quote">"הגאיה גוועת. סימבה, חזור הביתה."</div><p>בלי נאלה — לא היה מלך האריות. חברת הילדות של סימבה עזבה את הגאיה הסובלת, מצאה אותו ביער, ועודדה אותו לחזור ולהילחם על ממלכתו.</p><p>מבחינות רבות, נאלה היא הגיבורה האמיתית: היא לא ברחה, נשארה בסבל — ואז יצאה למשימה בלתי אפשרית ולבדה.</p>`
+      },
+      {
+        headline: "סקר: הנבל שאין כמוהו — ולמה אנחנו אוהבים לשנוא אותו",
+        dateline: "ממלכת הגאיה · עמוד חמישי",
+        body: `<div class="page-img">😈</div><div class="pull-quote">"אני מוקף בטיפשים..."</div><p>סקר, הדוד הרשע, ביצע את הפשע הנוראי ביותר: הרג את אחיו ואשים את בנו. אך בכישרון קולי ובנוכחות כריזמטית, הוא הפך לאחד מנבלי הקולנוע האהובים.</p><p>שיר <strong>"Be Prepared"</strong> — "היו מוכנים" — הפך לקלאסיקה ידועה. סקר שר אותו לפני הפשע הגדול. הבמאים הודו שסקר נועד לגלם רוע פוליטי — שאיננו נזקק לכוח גופני אלא רק לשכל ומניפולציה.</p>`
+      }
+    ]
+  },
+  {
+    id: "cinderella",
+    name: "סינדרלה",
+    subtitle: "מגזין בית המלוכה הקסום",
+    emoji: "👠",
+    price: "₪9",
+    teaser: "הנעל הקסומה — פשע לילי או אגדת אהבה?",
+    pages: [
+      {
+        headline: "נעל זכוכית נמצאה — הנסיך מחפש בעלים!",
+        dateline: "ממלכת המלך · גיליון ראשי",
+        body: `<div class="page-img">👠</div><div class="pull-quote">"אם הנעל מתאימה — תהיי אשתי!"</div><p>בשעה אחת לילה, בורחת נערה אנונימית מהארמון, שוכחת נעל זכוכית אחת על המדרגות. הנסיך — שנפל בה לאחר ריקוד אחד — שולח שליחים לכל הממלכה.</p><p>הנעל שנמצאה היא ייחודית לחלוטין: זכוכית מושלמת, ללא שריטה, שמתאימה לרגל אחת בלבד בעולם. "זו פשוט פיזיקה בלתי אפשרית," אמרו מומחי נעלי חצר.</p>`
+      },
+      {
+        headline: "אמא החורגת: הנבלת שמסתירה נערה מהאושר",
+        dateline: "ממלכת המלך · גיליון שני",
+        body: `<div class="page-img">😡</div><div class="pull-quote">"סינדרלה לא הולכת לשום מקום!"</div><p>אמא החורגת, שלטה בבית ביד רמה. שתי בנותיה — אנסטסיה ודריזלה — קיבלו כל טוב, בעוד סינדרלה עבדה ללא הרף. ובכל זאת, כשבא המכתב מהארמון, שברה אמא החורגת את שמלת הנסיכות של סינדרלה.</p><p>פסיכולוגים מגדירים אמא חורגת זו כמייצגת של קנאה ושליטה רעילה — דמות שמעמידה את הרצון שלה לפני אושר ילד חסר ישע.</p>`
+      },
+      {
+        headline: "פיה-יונקת: ניסוי קסמים שיצא משליטה?",
+        dateline: "ממלכת המלך · גיליון שלישי",
+        body: `<div class="page-img">🧚</div><div class="pull-quote">"ביבידי בובידי בו!"</div><p>פיית הגודמאדר הגיעה בזמן. דלעת הפכה לכרכרה, עכברים לסוסים, לטאה לעגלון — וסינדרלה בשמלת נסיכות. אך <strong>הקסם נעלם בחצות</strong> — הכרכרה חזרה לדלעת, הסוסים לעכברים, והשמלה נעלמה.</p><p>מדענים (בארץ הזו) תוהים: למה חצות? לפי תיאוריות הקסם, הרגע שבין יום ללילה הוא נקודת חולשה אנרגטית. "הפיה ידעה מה היא עושה," אמר קוסם ותיק בראיון.</p>`
+      },
+      {
+        headline: "הריקוד שבלב: מה עבר לסינדרלה כשפגשה את הנסיך?",
+        dateline: "ממלכת המלך · גיליון רביעי",
+        body: `<div class="page-img">💃</div><div class="pull-quote">"הוא הסתכל עלי... כאילו באמת ראה אותי."</div><p>בנשף המפואר, הצטיירה סינדרלה כנסיכה זרה. הנסיך בחר לרקוד רק איתה. שניים ריקדו לבד, נפרדים מהעולם — עד שפעמוני חצות הדהדו.</p><p>מחקר שפורסם בכתב העת לרומנטיקה קסומה: זה היה פגישה של שתי נפשות בודדות שמצאו זו את זו בין המוני אנשים. ולא בגלל השמלה — בגלל הנסיכות שמבפנים.</p>`
+      },
+      {
+        headline: "החתונה: ומה היה אחרי 'חיו באושר ועושר'?",
+        dateline: "ממלכת המלך · גיליון חמישי — מהדורה מיוחדת",
+        body: `<div class="page-img">💒</div><div class="pull-quote">"חיו באושר עד עצם היום הזה!"</div><p>הנסיך מצא את סינדרלה. הנעל התאימה. אמא החורגת פגשה את גורלה. והחתונה התקיימה בפאר ובהדר. אך האמת הגדולה? כוחה של האגדה הוא שגם מי שחי בחשכה ובסבל — יכול למצוא אור.</p><p>סינדרלה אינה רק סיפור נסיכות — היא סיפור על <strong>אמונה</strong> שאפשר להיות טוב ועדין גם כשהחיים אכזריים. הניצחון האמיתי לא בא מכוח, כסף או מזל — אלא מכוחה של <strong>אמונה פנימית</strong> שהטוב ינצח. ועל כך שלעיתים, הטוב מנצח.</p>`
+      }
+    ]
+  },
+  {
+    id: "nemo",
+    name: "מוצאים את נמו",
+    subtitle: "ידיעות מעמקי הים",
+    emoji: "🐠",
+    price: "₪11",
+    teaser: "נמו נמצא! הסיפור המלא על הדגון האמיץ",
+    pages: [
+      {
+        headline: "נמו נחטף! אבא יוצא לשליחות בלתי אפשרית",
+        dateline: "שונית האלמוגים · עמוד ראשון",
+        body: `<div class="page-img">🐠</div><div class="pull-quote">"אמצא אותך, נמו. הבטחתי."</div><p>מרלין, דג ליצן מתוחכם, קיבל את הסיוט הגרוע ביותר: בנו הצעיר נחטף על ידי צוללן אנושי. נמו, עם סנפיר קטן אחד, נלקח לאקווריום בסידני.</p><p>מרלין, הנודע בפחדנותו, החליט לחצות את האוקיינוס לבדו — מהשונית האוסטרלית לסידני. מהלך בלתי נתפס לדג שפחד ממים עמוקים.</p>`
+      },
+      {
+        headline: "דורי: הזיכרון הפגוע שהציל הכל",
+        dateline: "שונית האלמוגים · עמוד שני",
+        body: `<div class="page-img">🐟</div><div class="pull-quote">"<strong>פשוט ממשיכים לשחות!</strong>" — דורי</div><p>דורי, דגת כחולה עם זיכרון קצר-טווח, הפכה לבת הלוויה של מרלין. למרות שכחתה התמידית, היא הייתה זאת שקראה את כתובת הצוללן, שדיברה לקרישות, שהוביל.</p><p>מדענים ראו בה דמות מופת: אדם (או דג) עם מוגבלות שלא מגדיר את עצמו לפיה. "היא חיה ברגע," אמרה ד"ר מרי פין, "ובכל פעם מחדש."</p>`
+      },
+      {
+        headline: "אקווריום שן: הבריחה שהדהימה את כולם",
+        dateline: "שונית האלמוגים · עמוד שלישי",
+        body: `<div class="page-img">🌊</div><div class="pull-quote">"השקית תגיע לים אם תדחפנה מהשיש!"</div><p>בינתיים בסידני, נמו הצטרף לחבורת הדגים של האקווריום. הוא תכנן בריחה עם גיל (שן שוחה ומוזמן) ואחרים — והצליח לחסום את מסנן המים ולכפות ניקוי.</p><p>התוכנית הבלתי סבירה כמעט הצליחה — אך נמו נמצא ועבר לשקית. לבסוף, הוא שחה לחופשי לים וחזר לאביו.</p>`
+      },
+      {
+        headline: "כרישי ה'צמחונות': האירגון שנכשל בפגישתו הראשונה",
+        dateline: "שונית האלמוגים · עמוד רביעי",
+        body: `<div class="page-img">🦈</div><div class="pull-quote">"דגים הם חברים, לא אוכל!"</div><p>ברוס, אנקל ודנטל — שלושה כרישים שהחליטו להפסיק לאכול דגים. הם ייסדו קבוצת תמיכה ב"AA לכרישים". אך כשטיפה דם אחת נחתה על ברוס — הפגישה הפכה למרדף.</p><p>הפרק הזה מעלה שאלות מרתקות על יצרים מולדים מול החלטות מודעות — ועל כמה קל לחזור לדפוסים ישנים.</p>`
+      },
+      {
+        headline: "מרלין ונמו: מה ההרפתקאה לימדה על להרפות",
+        dateline: "שונית האלמוגים · עמוד חמישי",
+        body: `<div class="page-img">🌅</div><div class="pull-quote">"אם אתה אף פעם לא תתן לו לנסות, הוא לא ילמד."</div><p>מרלין היה אבא מגן יתר על המידה. הפחד שלו מהעולם הוביל לחסימה של נמו. אך לאחר שחצה אוקיינוס, הבין שהחיים אינם נמצאים בבועת בטחון.</p><p>מרלין שהיה <strong>מלא פחד</strong> בתחילת הסרט הפך <strong>לפחות מפחד</strong> בסופו — שכן הבין שהחיים האמיתיים הם מחוץ לבועה. מצאנו גבורה לא בחוסר פחד — אלא בפעולה למרות הפחד. ומרלין, שפחד ממים עמוקים, חצה את כולם בשביל אהבה.</p>`
+      }
+    ]
+  },
+  {
+    id: "frozen",
+    name: "פרוזן — קסם של אהבה",
+    subtitle: "עיתון ממלכת הקרח של ארנדל",
+    emoji: "❄️",
+    price: "₪13",
+    teaser: "אלזה שחררה קרח נצחי — מה קרה בהר הצפוני?",
+    pages: [
+      {
+        headline: "אלזה מכתירה — ומשגרת ארנדל לקפאון נצחי!",
+        dateline: "ארנדל · גיליון ראשי",
+        body: `<div class="page-img">❄️</div><div class="pull-quote">"Let it go! Let it go!"</div><p>יום ההכתרה של אלזה הפך לאסון: כפפות נשרו, עם הסודות גלה — ופתאום כל ארנדל קפאה בקרח. אלזה ברחה להר ובנתה ארמון קרח בכוחות עצמה.</p><p>השיר "Let It Go" — <strong>"Let it go, let it go, can't hold it back anymore!"</strong> — הפך להמנון שחרור לאנשים ברחבי העולם. המון צופים ראו בו ביטוי לשחרור מסודות, מבושה, מציפיות — נושאים שגעו נפשות מיליוני צופים.</p>`
+      },
+      {
+        headline: "הנס: הנסיך שהחביא פרצוף — שיעור על אמון עיוור",
+        dateline: "ארנדל · גיליון שני",
+        body: `<div class="page-img">🃏</div><div class="pull-quote">"אף אחד לא יאהב אותך לעולם."</div><p>אנה, שגדלה בבדידות, נפלה מיד על הנסיך הנאה הנס — ורצתה להתחתן אחרי פגישה ראשונה. זה היה נורמלי לאגדות ישנות. אבל "פרוזן" הפך את הזבל לסיפור: <strong>הנס</strong> היה <strong>נבל שתכנן הכל מראש</strong> — חיפש להשתלט על ממלכה, ולא מצא דרך טובה יותר מלשחק את הנסיך האוהב.</p><p>הצופים הדהומים ראו בכך מהפך: אגדת הנסיכות לימדה לא לסמוך על "מחזר נוצץ" שמופיע בחיים שלך מהיום לאחריו.</p>`
+      },
+      {
+        headline: "אנה: הנסיכה שהצילה הכל ב... אהבת אחות?!",
+        dateline: "ארנדל · גיליון שלישי",
+        body: `<div class="page-img">💕</div><div class="pull-quote">"אהבה אמיתית היא מעשה של אמת לאדם אחר."</div><p>הלב הקפוא של אנה — שנגרם מ<strong>קסם של אלזה</strong> שפגע בה בטעות — ניתן להמסה רק על ידי "מעשה אהבה אמיתית". כולם ציפו לנשיקת הנסיך. אך אנה ניצלה בגלל שהציבה את גופה בין אחותה לחרב.</p><p>מהפכה בנרטיב: לראשונה בסרטי הנסיכות של דיסני, גיבורת הסרט ניצלה לא על ידי נסיך — אלא על ידי <strong>אהבת אחות</strong> אמיתית.</p>`
+      },
+      {
+        headline: "אולף: שאלות קיומיות מפיו של איש שלג",
+        dateline: "ארנדל · גיליון רביעי",
+        body: `<div class="page-img">⛄</div><div class="pull-quote">"חולם לראות את הקיץ פעם אחת!"</div><p><strong>אולף</strong>, איש השלג שאלזה יצרה, חולם בתמימות על הקיץ — מבלי שמבין שהקיץ <strong>ימיס אותו</strong>. זו האירוניה הגדולה שלו. שיר "In Summer" הפך לרגע קומי-נוגע, עם עומק מפתיע.</p><p>הוא מגלם תמימות וחלומות ללא פחד. "חיבוקים חמים" — זה המשפט שמגדיר אותו. ובסוף, אלזה נותנת לו ענן קרח קטן כדי שלא ימס.</p>`
+      },
+      {
+        headline: "קרסטוף ו-סבן: ידידות אמת בין אדם לצבי",
+        dateline: "ארנדל · גיליון חמישי",
+        body: `<div class="page-img">🦌</div><div class="pull-quote">"האם אתה מדבר עם הצבי שלך? אני ידע."</div><p>קרסטוף, מוכר הקרח הגסוס, בנה עולם עם צבי-ידידו <strong>סבן</strong>. <strong>סבן</strong> — שמו הפשוט של הצבי הנאמן ביותר בסרט. הוא דיבר עבורו, השיב לעצמו, ויצר מערכת יחסים מדהימה — ואנחנו התאהבנו בה.</p><p>מחקרי קולנוע ציינו שהקשר בין קרסטוף לסבן ייצג אמון אמיתי, לא תלוי ולא מחשב — בניגוד לכל שאר הדמויות בסרט שמשקרות ומסתירות. לפעמים, הכנות הגדולה ביותר היא בין אדם לחיה.</p>`
+      }
+    ]
+  }
+];
+
+let currentPaper = null;
+let currentPage = 0;
+
+function renderGrid() {
+  const grid = document.getElementById('papers-grid');
+  grid.innerHTML = '';
+  newspapers.forEach((p, i) => {
+    const card = document.createElement('article');
+    card.className = 'newspaper-card';
+    card.innerHTML = `
+      <div class="card-header">✦ עיתון מקצועי · גיליון ${i+1} ✦</div>
+      <div class="card-flag">
+        <span class="card-name">${p.name}</span>
+        <span class="card-subtitle-line">${p.subtitle}</span>
+      </div>
+      <div class="card-cover-art">${p.emoji}</div>
+      <div class="card-teaser">${p.teaser}</div>
+      <div class="card-footer">
+        <div class="price-badge">${p.price}</div>
+        <button class="read-btn" onclick="openPaper(${i})">קרא עכשיו ▸</button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function openPaper(idx) {
+  currentPaper = newspapers[idx];
+  currentPage = 0;
+  document.getElementById('viewer-title').textContent = currentPaper.name;
+  document.getElementById('viewer-screen').classList.add('active');
+  renderPage();
+  document.body.style.overflow = 'hidden';
+}
+
+function closeViewer() {
+  document.getElementById('viewer-screen').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function changePage(dir) {
+  currentPage = Math.max(0, Math.min(currentPaper.pages.length - 1, currentPage + dir));
+  renderPage();
+}
+
+function goToPage(n) {
+  currentPage = n;
+  renderPage();
+}
+
+function renderPage() {
+  const p = currentPaper.pages[currentPage];
+  const total = currentPaper.pages.length;
+  document.getElementById('viewer-page').innerHTML = `
+    <h2 class="page-headline">${p.headline}</h2>
+    <div class="page-dateline">${p.dateline}</div>
+    <div class="page-body page-drop-cap">${p.body}</div>
+  `;
+  document.getElementById('page-counter').textContent = `עמוד ${currentPage+1} מתוך ${total}`;
+  document.getElementById('btn-prev').disabled = currentPage === 0;
+  document.getElementById('btn-next').disabled = currentPage === total - 1;
+  const dots = document.getElementById('page-dots');
+  dots.innerHTML = '';
+  for(let i = 0; i < total; i++) {
+    const d = document.createElement('div');
+    d.className = 'page-dot' + (i === currentPage ? ' active' : '');
+    d.onclick = () => goToPage(i);
+    dots.appendChild(d);
+  }
+  document.getElementById('viewer-page').scrollTop = 0;
+  updatePrintBtn();
+}
+
+document.getElementById('viewer-screen').addEventListener('click', function(e) {
+  if(e.target === this) closeViewer();
+});
+
+document.addEventListener('keydown', e => {
+  if(!document.getElementById('viewer-screen').classList.contains('active')) return;
+  if(e.key === 'ArrowLeft') changePage(1);
+  if(e.key === 'ArrowRight') changePage(-1);
+  if(e.key === 'Escape') closeViewer();
+});
+
+renderGrid();
+</script>
+</body>
+</html>
